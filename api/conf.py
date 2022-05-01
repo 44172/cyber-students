@@ -1,4 +1,4 @@
-PORT = 4000
+PORT = 443
 
 MONGODB_HOST = {
     'host': 'localhost',

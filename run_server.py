@@ -8,7 +8,11 @@ from api.app import Application
 def main():
     basicConfig(level=INFO)
 
-    http_server = HTTPServer(Application())
+    #http_server = HTTPServer(Application())
+    http_server = HTTPServer(Application(), ssl_options={
+        "certfile": "cert.crt",
+        "keyfile": "privatekey.cer",
+    })
     http_server.listen(PORT)
 
     info('Starting server on port ' + str(PORT) + '...')
