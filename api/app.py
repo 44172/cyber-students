@@ -21,7 +21,7 @@ class Application(Application):
             (r'/students/api/logout', LogoutHandler),
             (r'/students/api/user', UserHandler)
         ]
-
+        #debug = True
         settings = dict()
 
         super(Application, self).__init__(handlers, **settings)

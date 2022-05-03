@@ -3,6 +3,8 @@ from time import mktime
 from tornado.escape import json_decode, utf8
 from tornado.gen import coroutine
 from uuid import uuid4
+from ..crypto import encrypt_aes_256, valid_login
+from os import environ
 
 from .base import BaseHandler
 
@@ -50,16 +52,18 @@ class LoginHandler(BaseHandler):
             return
 
         user = yield self.db.users.find_one({
-          'email': email
+          'email': encrypt_aes_256(email, environ.get('KEYFILE'))
         }, {
-          'password': 1
+          'password': 1,
+          'saltkey': 1
         })
+        print(user)
 
         if user is None:
             self.send_error(403, message='The email address and password are invalid!')
             return
 
-        if user['password'] != password:
+        if not valid_login(user, password):
             self.send_error(403, message='The email address and password are invalid!')
             return
 
