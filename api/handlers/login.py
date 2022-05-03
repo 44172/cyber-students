@@ -67,7 +67,7 @@ class LoginHandler(BaseHandler):
             self.send_error(403, message='The email address and password are invalid!')
             return
 
-        token = yield self.generate_token(email)
+        token = yield self.generate_token(encrypt_aes_256(email, environ.get('KEYFILE')))
 
         self.set_status(200)
         self.response['token'] = token['token']

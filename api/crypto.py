@@ -31,12 +31,12 @@ def decrypt_aes_256(ciphertext, key):
                         modes.CBC(bytearray(16)),
                         backend=default_backend())
     aes_decryptor = aes_cipher.decryptor()
-    unpadder = padding.PKCS7(algorithms.AES.block_size).unpadder()
+    unpadder = padding.PKCS7(256).unpadder()
 
     padded_bytes = aes_decryptor.update(ciphertext) + aes_decryptor.finalize()
     plaintext_bytes = unpadder.update(padded_bytes) + unpadder.finalize()
     plaintext = str(plaintext_bytes, "utf-8")
-    print("ciphertext is: " + ciphertext)
+    print("ciphertext is: " + str(ciphertext.hex()))
     print("plaintext is: " + plaintext)
     return plaintext
 

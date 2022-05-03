@@ -1,7 +1,8 @@
 from tornado.escape import json_decode, utf8
 from tornado.gen import coroutine
 from tornado.web import authenticated
-
+from os import environ
+from ..crypto import decrypt_aes_256
 from .auth import AuthHandler
 
 class UserHandler(AuthHandler):
@@ -9,8 +10,8 @@ class UserHandler(AuthHandler):
     @authenticated
     def get(self):
         self.set_status(200)
-        self.response['email'] = self.current_user['email']
-        self.response['displayName'] = self.current_user['display_name']
+        self.response['email'] = decrypt_aes_256(bytes.fromhex(self.current_user['email']), environ.get('KEYFILE'))
+        self.response['displayName'] = decrypt_aes_256(bytes.fromhex(self.current_user['display_name']), environ.get('KEYFILE'))
         self.write_json()
 
     @coroutine
