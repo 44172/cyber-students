@@ -184,3 +184,29 @@ As you can see, all of the information is stored in the clear; there
 is no encryption or password hashing. If a hacker was to compromise
 the database, they could easily run a similar program to retrieve all
 of the users personal information and passwords.
+
+
+######################################################################################
+setup to run on port 443 with SSL from self signed cert, contained on root directory "cyber-students"
+public cert is cert.crt
+private key is privatekey.cer
+if you want to duplicate you will need to generate your own
+
+added crypto.py
+-AES256 encrypt and decrypt tool
+-random salt and hash of passwords
+-environment variable on computer set for encryption decryption key called "KEYFILE"
+
+Set AES256 encryption for following fields;
+email
+name
+address
+phone
+dateofbirth
+disabilities
+
+added extra field for recording random salt with user registration
+
+setup user-api to display name and email decrypted
+
+###################################################################################
